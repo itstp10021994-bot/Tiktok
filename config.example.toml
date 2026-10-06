@@ -1,0 +1,51 @@
+# Copy file này thành config.toml rồi sửa các giá trị bên dưới.
+# Đường dẫn tương đối được tính từ thư mục chứa file config.
+
+[tiktok]
+# Lấy ở https://developers.tiktok.com → My apps → app của bạn
+client_key = "YOUR_CLIENT_KEY"
+client_secret = "YOUR_CLIENT_SECRET"
+# Phải trùng với Redirect URI đã khai báo trong app (Login Kit).
+redirect_uri = "http://127.0.0.1:8765/callback/"
+# "desktop" (dùng PKCE, redirect về localhost) hoặc "web" (redirect https, dán URL thủ công)
+app_type = "desktop"
+
+[folders]
+# Thư mục chứa video chờ đăng (Windows: dùng / hoặc \\, ví dụ "D:/TikTok/queue")
+watch = "videos"
+# Video đã đăng / lỗi quá số lần thử sẽ được chuyển vào đây (mặc định: watch/posted, watch/failed)
+# posted = "videos/posted"
+# failed = "videos/failed"
+# Nơi lưu token, trạng thái và log
+# data = ".tiktok_data"
+# Thứ tự đăng: "name" (theo tên file A→Z) hoặc "mtime" (file cũ nhất trước)
+order = "name"
+extensions = [".mp4", ".mov", ".webm"]
+
+[schedule]
+timezone = "Asia/Ho_Chi_Minh"
+# Các khung giờ đăng cố định mỗi ngày (HH:MM, 24h)
+times = ["08:00", "12:00", "19:30"]
+# Ngày trong tuần được đăng; bỏ trống = mọi ngày
+days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+# Số video đăng mỗi khung giờ
+posts_per_slot = 1
+
+[post]
+# "direct": đăng thẳng lên trang cá nhân (cần scope video.publish)
+# "inbox" : gửi video vào hộp thư TikTok dưới dạng bản nháp, bạn bấm đăng trên điện thoại (scope video.upload)
+mode = "direct"
+# PUBLIC_TO_EVERYONE | MUTUAL_FOLLOW_FRIENDS | FOLLOWER_OF_CREATOR | SELF_ONLY
+# App CHƯA được TikTok duyệt chỉ đăng được SELF_ONLY (riêng tư).
+privacy_level = "SELF_ONLY"
+# Caption khi không có file .txt cùng tên với video. {name} = tên file video.
+default_caption = "{name} #fyp #xuhuong"
+disable_comment = false
+disable_duet = false
+disable_stitch = false
+# Đánh dấu nội dung do AI tạo
+is_aigc = false
+# Lỗi quá số lần này thì chuyển video sang thư mục failed
+max_attempts = 3
+# Kích thước mỗi phần upload (5–64 MB)
+chunk_size_mb = 10
